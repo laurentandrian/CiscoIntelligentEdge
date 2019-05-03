@@ -1,0 +1,6 @@
+classes= 80
+#train = /home/pi/darknet-nnpack/data/goal.txt
+#valid  = /home/pi/darknet-nnpack/data/goal.txt 
+names = /home/pi/darknet-nnpack/data/coco.names
+#backup = /home/pi/darknet-nnpack/data/ 
+#eval=coco
