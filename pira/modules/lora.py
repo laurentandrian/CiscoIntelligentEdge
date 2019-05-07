@@ -7,6 +7,7 @@ import struct
 import time
 import pigpio
 import RPi.GPIO as gpio
+import mspack
 
 from ..hardware import devices, lora
 from ..const import MEASUREMENT_DEVICE_VOLTAGE, MEASUREMENT_DEVICE_TEMPERATURE
@@ -115,7 +116,10 @@ class Module(object):
         if not message:
             print("WARNING: LoRa message empty, not transmitting.")
             return
-
+         
+         payloadtoPack = {'MT': 'Boot','Serial':'0004'}
+         message=msgpack.packb(payloadtoPack)
+    
         print("Transmitting message ({} bytes) via LoRa...".format(len(message)))
 
         payload = lora.LoRaWANPayload(self._nws_key, self._apps_key)

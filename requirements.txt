@@ -14,5 +14,4 @@ PyYAML==3.12
 statistics
 python-can
 iso8601
-m2x
-azure
+msgpack
