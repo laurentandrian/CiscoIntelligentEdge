@@ -1,5 +1,5 @@
-#FROM balenalib/rpi-debian-python:latest
-FROM resin/pirasmart-python:latest
+FROM balenalib/rpi-debian-python:latest
+
 
 # Switch on systemd init system in container.
 ENV INITSYSTEM on
