@@ -7,7 +7,7 @@ import struct
 import time
 import pigpio
 import RPi.GPIO as gpio
-import mspack
+import msgpack
 
 from ..hardware import devices, lora
 from ..const import MEASUREMENT_DEVICE_VOLTAGE, MEASUREMENT_DEVICE_TEMPERATURE
@@ -111,14 +111,18 @@ class Module(object):
         if 'pira.modules.depth' in modules:
             from .depth import MEASUREMENT_DEPTH_DEPTH
             measurements.append(MEASUREMENT_DEPTH_DEPTH)
+		#Send Status Message
+        StatusMsg =  {}
+        StatusMsg["MT"]="Status"
+        StatusMsg["SN"]="0004"
+        StatusMsg["B"]=str(self._boot.get_voltage())
+        message = msgpack.packb(StatusMsg)
 
-        message = create_measurements_message(self._boot, self._last_update, measurements)
+        #message = create_measurements_message(self._boot, self._last_update, measurements)
         if not message:
             print("WARNING: LoRa message empty, not transmitting.")
             return
          
-         payloadtoPack = {'MT': 'Boot','Serial':'0004'}
-         message=msgpack.packb(payloadtoPack)
     
         print("Transmitting message ({} bytes) via LoRa...".format(len(message)))
 
@@ -128,7 +132,7 @@ class Module(object):
             {
                 'devaddr': self._device_addr,
                 'fcnt': self._frame_counter % 2**16,
-                'data': list([ord(x) for x in message]),
+                'data': message,
             }
         )
 
