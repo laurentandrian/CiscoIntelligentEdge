@@ -132,7 +132,7 @@ class Module(object):
             {
                 'devaddr': self._device_addr,
                 'fcnt': self._frame_counter % 2**16,
-                'data': message,
+                'data': list([ord(x) for x in message,
             }
         )
 
